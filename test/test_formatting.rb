@@ -22,7 +22,7 @@ class TestClothRedFormatting <  Test::Unit::TestCase
     ["<cite>citation</cite>", "??citation??"], 
     ["<code>ClothRed#to_textile</code>", "@ClothRed#to_textile@"], 
     ["<del>delete</del>", "-delete-"], ["<ins>underline</ins>", "+underline+"], 
-    ["<sup>superscript</sup>","^superscript^"], ["<sub>subscript</sub>","~subscript~"] 
+    ["<sup>superscript</sup>","^superscript^"], ["<sub>subscript</sub>","~subscript~"],
   ]
  
   def test_textformatting

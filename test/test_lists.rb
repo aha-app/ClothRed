@@ -16,7 +16,7 @@ require 'test/unit'
 class TestClothRedLists < Test::Unit::TestCase
  
 LISTS_TEST = [
-    ["<ol>",""], ["</ol>",""], ["<li>","*"], ["</li>",""]
+    ["<ol>",""], ["</ol>","\n"], ["<li>","* "], ["</li>","\n"], ["<ul>",""], ["</ul>","\n"],
   ]
   
   def test_lists

@@ -28,7 +28,7 @@ class ClothRed < String
   ]
 
   STRUCTURES = [
-    ["<p>", "p. "],["</p>","\n\n"], ["<blockquote>", "bq. "], ["</blockquote>",""],
+    ["<p>", ""],["</p>","\n\n"], ["<blockquote>", "bq. "], ["</blockquote>",""],
     ["<br />", "\n"], ["<br>", "\n"]
   ]
 
@@ -44,7 +44,7 @@ class ClothRed < String
   ]
 
   LISTS = [
-    ["<ol>",""], ["</ol>",""], ["<li>","*"], ["</li>",""]
+    ["<ol>",""], ["</ol>","\n"], ["<li>","* "], ["</li>","\n"], ["<ul>",""], ["</ul>","\n"],
   ]
 
   def initialize (html)
@@ -107,6 +107,7 @@ class ClothRed < String
     LISTS.each do |htmltag, textiletag|
       text.gsub!(htmltag, textiletag)
     end
+    text
   end
 
   def css_styles(text)

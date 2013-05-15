@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require "rake"
-require "rspec/core/rake_task"
 require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 require "ci/reporter/rake/rspec"
 require "rake/testtask"
 require 'geminabox/rake_task'

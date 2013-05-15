@@ -15,10 +15,10 @@ Gem::Specification.new do |gem|
     gem.require_paths = ["lib"]
     gem.version       = ClothRed::VERSION
     ##TODO Make these gems listed below as dev dependencies.
-    gem.add_development_dependency("rspec", "~>2")
-    gem.add_development_dependency("rake")
-    gem.add_development_dependency("ci_reporter")
-    gem.add_development_dependency("simplecov")
-    gem.add_development_dependency("test-unit")
-    gem.add_development_dependency("geminabox")
+    gem.add_development_dependency 'rspec'
+    gem.add_development_dependency 'rake'
+    gem.add_development_dependency 'ci_reporter'
+    gem.add_development_dependency 'simplecov'
+    gem.add_development_dependency 'test-unit'
+    gem.add_development_dependency 'geminabox'
 end

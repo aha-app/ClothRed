@@ -14,10 +14,11 @@ class ClothRed < String
 
   TEXT_FORMATTING = [
     ["<b>", "**"], ["</b>","**"], ["<em>","_"], ["</em>", "_"], ["<b>", "*"],
-    ["</b>", "*"], ["<cite>", "??"], ["</cite>", "??"], ["<code>", "@"],
-    ["</code>", "@"], ["<del>", "-"], ["</del>", "-"], ["<ins>", "+"],
+    ["</b>", "*"], ["<cite>", "??"], ["</cite>", "??"],
+    ["<code>", "{{"], ["</code>", "}}"],
+    ["<del>", "-"], ["</del>", "-"], ["<ins>", "+"],
     ["</ins>", "+"], ["<sup>","^"], ["</sup>","^"], ["<sub>","~"], ["</sub>","~"],
-    ["<strong>", "*"], ["</strong>", "*"], ["<i>","__"], ["</i>", "__"]
+    ["<strong>", "*"], ["</strong>", "*"], ["<i>","__"], ["</i>", "__"],
   ]
 
   HEADINGS = [
@@ -47,6 +48,17 @@ class ClothRed < String
     ["<ol>",""], ["</ol>","\n"], ["<li>","* "], ["</li>","\n"], ["<ul>",""], ["</ul>","\n"],
   ]
 
+  IMAGE_LINKS = [
+    ["<img src=\"","!"], ["\" alt=\"\" />","!"],
+  ]
+
+  # <a href=\"http://www.rallydev.com\">http://www.rallydev.com</a>           [http://www.rallydev.com]
+  # <a href=\"http://www.rallydev.com\">Rally Software Development Corp</a>   [Rally Software Development Corp|http://www.rallydev.com]
+  LINKS = [
+    [/<a href=".*">((mailto|https?):.*?)<\/a>/, '[\1]'],
+    [/<a href="(.*?)">(.*?)<\/a>/, '[\2|\1]'],
+  ]
+
   def initialize (html)
     super(html)
     @workingcopy = html
@@ -61,6 +73,8 @@ class ClothRed < String
     entities(@workingcopy)
     tables(@workingcopy)
     lists(@workingcopy)
+    image_links(@workingcopy)
+    links(@workingcopy)
     @workingcopy = CGI::unescapeHTML(@workingcopy)
     @workingcopy
   end
@@ -105,6 +119,20 @@ class ClothRed < String
 
   def lists(text)
     LISTS.each do |htmltag, textiletag|
+      text.gsub!(htmltag, textiletag)
+    end
+    text
+  end
+
+  def image_links(text)
+    IMAGE_LINKS.each do |htmltag, textiletag|
+      text.gsub!(htmltag, textiletag)
+    end
+    text
+  end
+
+  def links(text)
+    LINKS.each do |htmltag, textiletag|
       text.gsub!(htmltag, textiletag)
     end
     text

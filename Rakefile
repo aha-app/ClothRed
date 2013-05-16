@@ -6,6 +6,9 @@ require "ci/reporter/rake/rspec"
 require "rake/testtask"
 require 'geminabox/rake_task'
 
+desc "Build Gem and push it to Rally Gem server"
+task :gem_push => ["build", "rally:publish"]
+
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.test_files = FileList['test/test*.rb']

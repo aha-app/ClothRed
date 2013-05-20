@@ -17,9 +17,9 @@ class TestClothRedTables < Test::Unit::TestCase
  
   TABLES_TEST = [
     ["<table><tr><td>name</td><td>age</td><td>sex</td></tr><tr><td>joan</td><td>24</td><td>f</td></tr></table>",
-    "|name|age|sex|\n|joan|24|f|\n"], 
+    "|name|age|sex|\n|joan|24|f|\n\n"],
     ["<table><tr><th>name</th><th>age</th><th>sex</th></tr><tr><td>joan</td><td>24</td><td>f</td></tr></table>",
-    "|_.name|_.age|_.sex|\n|joan|24|f|\n"]
+    "|_.name|_.age|_.sex|\n|joan|24|f|\n\n"]
   ]
   
   def test_entities

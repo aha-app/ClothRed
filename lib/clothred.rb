@@ -44,8 +44,14 @@ class ClothRed < String
     ["</td>",""], ["<th>", "|_."], ["</th>", ""]
   ]
 
+  @@li_notation = "*"
   LISTS = [
-    ["<ol>",""], ["</ol>","\n"], ["<li>","* "], ["</li>","\n"], ["<ul>",""], ["</ul>","\n"],
+    ["<ol>", "" ],
+    ["<ul>", "" ],
+    ["<li>", lambda{ "#{@@li_notation} " }],
+    ["</li>", "\n" ],
+    ["</ol>", "\n" ],
+    ["</ul>", "\n" ]
   ]
 
   IMAGE_LINKS = [
@@ -72,7 +78,7 @@ class ClothRed < String
     text_formatting(@workingcopy)
     entities(@workingcopy)
     tables(@workingcopy)
-    lists(@workingcopy)
+    @workingcopy = lists(@workingcopy)
     image_links(@workingcopy)
     links(@workingcopy)
     @workingcopy = CGI::unescapeHTML(@workingcopy)
@@ -117,11 +123,20 @@ class ClothRed < String
     text
   end
 
-  def lists(text)
-    LISTS.each do |htmltag, textiletag|
-      text.gsub!(htmltag, textiletag)
+  # @@li_notation is a class variable that changes the notation for an LI html tag between # and * based on a
+  # prefixed OL or UL HTML tag.  OL will create a Textile # and UL will create a Textile *.
+  def lists(all_text)
+    results = []
+    all_text.each_line(" ").each do |text|
+      LISTS.each do |htmltag, textiletag|
+        @@li_notation = "#" if text.include?("<ol>")
+        @@li_notation = "*" if text.include?("<ul>")
+        textile_tag = textiletag.is_a?(Proc) ? textiletag.call : textiletag
+        text.gsub!(htmltag, textile_tag)
+      end
+      results << text
     end
-    text
+    results.join("")
   end
 
   def image_links(text)

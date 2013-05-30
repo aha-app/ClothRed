@@ -17,7 +17,7 @@ require "test/unit"
 class TestClothRedFormatting <  Test::Unit::TestCase
   
   FORMATTING_STRINGS = [
-    ["<b>bold</b>","**bold**"], ["<strong>strong</strong>", "*strong*"], 
+    ["<b>bold</b>","*bold*"], ["<strong>strong</strong>", "*strong*"],
     ["<em>emphasized</em>", "_emphasized_"],["<i>italics</i>", "__italics__"], 
     ["<cite>citation</cite>", "??citation??"], 
     ["<code>ClothRed#to_textile</code>", "{{ClothRed#to_textile}}"],

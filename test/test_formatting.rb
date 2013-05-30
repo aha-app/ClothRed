@@ -25,6 +25,7 @@ class TestClothRedFormatting <  Test::Unit::TestCase
     ["<code>ClothRed#to_textile</code>", "{{ClothRed#to_textile}}"],
     ["<del>delete</del>", "-delete-"], ["<ins>underline</ins>", "+underline+"], 
     ["<sup>superscript</sup>","^superscript^"], ["<sub>subscript</sub>","~subscript~"],
+    ["<div><i>XHTML</i> <u>page</u> <b>break</b></div>", "_XHTML_ +page+ *break*\n"]
   ]
  
   def test_textformatting

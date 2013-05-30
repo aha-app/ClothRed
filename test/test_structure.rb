@@ -16,9 +16,11 @@ require 'test/unit'
 class TestClothRedStructures < Test::Unit::TestCase
  
   STRUCTURE_TEST = [
-  ["<blockquote>blockquote</blockquote>","bq. blockquote"],
+  ["<blockquote>blockquote</blockquote>", "bq. blockquote"],
   ["<p>paragraph</p><p>another paragraph</p>", "paragraph\n\nanother paragraph\n\n"],
-  ["HTML page break<br>", "HTML page break\n"], ["XHTML page break<br />", "XHTML page break\n"]
+  ["HTML page break<br>", "HTML page break\n"],
+  ["XHTML page break<br />", "XHTML page break\n"],
+  ["<div>XHTML page break</div>", "XHTML page break\n"]
   ]
   
   

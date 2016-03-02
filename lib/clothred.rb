@@ -39,7 +39,7 @@ class ClothRed < String
   STRUCTURES = [
     ["<p>", ""],["</p>","\n\n"],
     ["<blockquote>", "bq. "], ["</blockquote>",""],
-    ["<br />", "\n"], ["<br>", "\n"],
+    ["<br />", "\n"], ["<br/>", "\n"], ["<br>", "\n"],
     ["<div>", ""], ["</div>", "\n"]
   ]
 

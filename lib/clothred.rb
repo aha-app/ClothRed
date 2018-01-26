@@ -72,9 +72,11 @@ class ClothRed < String
 
   # <a href=\"http://www.rallydev.com\">http://www.rallydev.com</a>           [http://www.rallydev.com]
   # <a href=\"http://www.rallydev.com\">Rally Software Development Corp</a>   [Rally Software Development Corp|http://www.rallydev.com]
+  # <a class="mce-item-anchor" title="" contenteditable="false" name="bigheading"></a>
   LINKS = [
     [/<a href=".*">((mailto|https?):.*?)<\/a>/, '[\1]'],
     [/<a href="(.*?)">(.*?)<\/a>/, '[\2|\1]'],
+    [/<a class="mce-item-anchor"(.*)><\/a>/, '']
   ]
 
   def initialize (html)

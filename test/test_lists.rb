@@ -14,11 +14,11 @@ end
 require 'test/unit'
 
 class TestClothRedLists < Test::Unit::TestCase
- 
+
 LISTS_TEST = [
     ["<ol>",""],
     ["</ol>","\n"],
-    ["<li>","# "],
+    ["<li>","* "],
     ["</li>","\n"],
     ["<ul>",""],
     ["</ul>","\n"],
@@ -31,12 +31,30 @@ LISTS_TEST = [
       "# Item 1\n# Item 2\n# Item 3\n\n* Item 1\n* Item 2\n* Item 3\n\n"
     ],
   ]
-  
+
   def test_lists
     LISTS_TEST.each do |html, textile|
       test_html = ClothRed.new(html)
       result = test_html.to_textile
       assert_equal(textile,result)
     end
+  end
+
+  def test_list_notation_does_not_carry_over_to_the_next_conversion
+    ClothRed.new("<ol><li>Item 1</li></ol>").to_textile
+
+    assert_equal("* Item 1\n", ClothRed.new("<li>Item 1</li>").to_textile)
+  end
+
+  # Steps two conversions the way threads switching between them would: one sees <ol>, then the other sees <ul>
+  def test_interleaved_conversions_keep_their_own_list_notation
+    ordered = ClothRed.new("")
+    unordered = ClothRed.new("")
+
+    ordered.send(:lists, "<ol>")
+    unordered.send(:lists, "<ul>")
+
+    assert_equal("# Item 1\n", ordered.send(:lists, "<li>Item 1</li>"))
+    assert_equal("* Item 1\n", unordered.send(:lists, "<li>Item 1</li>"))
   end
 end

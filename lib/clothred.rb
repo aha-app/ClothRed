@@ -11,7 +11,6 @@ License:: BSD
 require 'cgi'
 
 class ClothRed < String
-
   TEXT_FORMATTING = [
     ["<em>","_"], ["</em>", "_"],
     ["<b>", "*"], ["</b>", "*"],
@@ -80,8 +79,11 @@ class ClothRed < String
 
   def initialize (html)
     super(html)
-    @workingcopy = html
+
     @li_notation = "*"
+
+    # Make a copy of this as the conversion edits it in place and the caller's string may be shared or frozen
+    @workingcopy = html.dup
   end
 
   #Call all necessary methods to convert a string of HTML into Textile markup.

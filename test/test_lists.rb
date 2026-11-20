@@ -40,6 +40,18 @@ LISTS_TEST = [
     end
   end
 
+  def test_conversion_does_not_change_the_callers_string
+    html = +"<p><ol><li>a</li></ol></p>"
+
+    ClothRed.new(html).to_textile
+
+    assert_equal("<p><ol><li>a</li></ol></p>", html)
+  end
+
+  def test_converts_a_frozen_string
+    assert_equal("# a\n\n\n\n", ClothRed.new("<p><ol><li>a</li></ol></p>".freeze).to_textile)
+  end
+
   def test_list_notation_does_not_carry_over_to_the_next_conversion
     ClothRed.new("<ol><li>Item 1</li></ol>").to_textile
 

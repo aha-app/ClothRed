@@ -11,7 +11,6 @@ License:: BSD
 require 'cgi'
 
 class ClothRed < String
-
   TEXT_FORMATTING = [
     ["<em>","_"], ["</em>", "_"],
     ["<b>", "*"], ["</b>", "*"],
@@ -56,11 +55,10 @@ class ClothRed < String
     ["<th>", "|_."], ["</th>", ""]
   ]
 
-  @@li_notation = "*"
   LISTS = [
     ["<ol>", "" ],
     ["<ul>", "" ],
-    ["<li>", lambda{ "#{@@li_notation} " }],
+    ["<li>", lambda { |li_notation| "#{li_notation} " }],
     ["</li>", "\n" ],
     ["</ol>", "\n" ],
     ["</ul>", "\n" ]
@@ -81,7 +79,11 @@ class ClothRed < String
 
   def initialize (html)
     super(html)
-    @workingcopy = html
+
+    @li_notation = "*"
+
+    # Make a copy of this as the conversion edits it in place and the caller's string may be shared or frozen
+    @workingcopy = html.dup
   end
 
   #Call all necessary methods to convert a string of HTML into Textile markup.
@@ -137,19 +139,22 @@ class ClothRed < String
     text
   end
 
-  # @@li_notation is a class variable that changes the notation for an LI html tag between # and * based on a
-  # prefixed OL or UL HTML tag.  OL will create a Textile # and UL will create a Textile *.
+  # @li_notation changes the notation for an LI html tag between # and * based on a
+  # prefixed OL or UL HTML tag. OL will create a Textile # and UL will create a Textile *.
   def lists(all_text)
     results = []
+
     all_text.each_line(" ").each do |text|
       LISTS.each do |htmltag, textiletag|
-        @@li_notation = "#" if text.include?("<ol>")
-        @@li_notation = "*" if text.include?("<ul>")
-        textile_tag = textiletag.is_a?(Proc) ? textiletag.call : textiletag
+        @li_notation = "#" if text.include?("<ol>")
+        @li_notation = "*" if text.include?("<ul>")
+        textile_tag = textiletag.is_a?(Proc) ? textiletag.call(@li_notation) : textiletag
         text.gsub!(htmltag, textile_tag)
       end
+
       results << text
     end
+
     results.join("")
   end
 
